@@ -37,14 +37,14 @@ function createElement(inputValue, checked = false, setStorage = false) {
     var index = indexOf(id);
     if (index > -1) {
       myTodos[index].checked = !myTodos[index].checked;
-      sessionStorage.setItem('storedTodos', JSON.stringify(myTodos));
+      localStorage.setItem('storedTodos', JSON.stringify(myTodos));
       li.classList.toggle('checked');
     }
   }
   span.onclick = function() {
     document.getElementById(id).remove();
     myTodos.splice(indexOf(id), 1)
-    sessionStorage.setItem('storedTodos', JSON.stringify(myTodos));
+    localStorage.setItem('storedTodos', JSON.stringify(myTodos));
   }
   if (checked) {
     li.classList.toggle('checked');
@@ -52,16 +52,16 @@ function createElement(inputValue, checked = false, setStorage = false) {
   myTodos.push({ id, todo: inputValue, checked });
 
   if (setStorage) {
-    sessionStorage.setItem('storedTodos', JSON.stringify(myTodos));
+    localStorage.setItem('storedTodos', JSON.stringify(myTodos));
   }
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
   if (typeof(Storage) !== "undefined") {
-    if (!sessionStorage.getItem('storedTodos')) {
-      sessionStorage.setItem('storedTodos', []);
+    if (!localStorage.getItem('storedTodos')) {
+      localStorage.setItem('storedTodos', []);
     } else {
-      var tmp = JSON.parse(sessionStorage.getItem('storedTodos'));
+      var tmp = JSON.parse(localStorage.getItem('storedTodos'));
       tmp.forEach(elt => {
         createElement(elt.todo, elt.checked);
       });
